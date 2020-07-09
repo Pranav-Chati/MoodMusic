@@ -23,6 +23,16 @@ class LoginPage extends React.Component {
         event.preventDefault();
         console.log(this.state.username);
         console.log(this.state.password);
+
+        const CREDENTIAL_ID = "059bd8a6413444029e2d071dd6f1e1c7"
+        fetch('https://accounts.spotify.com/authorize?client_id=' + CREDENTIAL_ID +
+            '&response_type=code&redirect_uri=www.google.com&state=34fFs29kd09')
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 
     render() {
