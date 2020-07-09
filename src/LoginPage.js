@@ -6,12 +6,13 @@ class LoginPage extends React.Component {
         this.state = {
             username: '',
             password: ''
-        }
-        this.handleChange = this.handleChange.bind(this)
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.submitHandler = this.submitHandler.bind(this);
     }
 
     handleChange(event) {
-        const [name, value] = event.target;
+        const {name, value} = event.target;
         this.setState({
             [name]: value,
         })
@@ -26,8 +27,8 @@ class LoginPage extends React.Component {
     render() {
         return (
             <div>
-
                 <form onSubmit={this.submitHandler}>
+                    <h1>Spotify Login</h1>
                     <label>
                         Username:
                         <input type={"text"}
@@ -45,9 +46,8 @@ class LoginPage extends React.Component {
                                placeholder={"Password"}
                                onChange={this.handleChange}/>
                     </label>
-
                     <br/>
-                    <input type={"submit"}> Submit</input>
+                    <input type={"submit"} value={"Submit"}/>
                 </form>
             </div>
         )

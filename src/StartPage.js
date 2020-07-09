@@ -9,6 +9,8 @@ class StartPage extends React.Component {
             showButton:true,
             showLogin:false,
         }
+
+        this.handleClick=this.handleClick.bind(this);
     }
 
     handleClick(event) {
