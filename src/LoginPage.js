@@ -46,7 +46,6 @@ class LoginPage extends React.Component {
                                placeholder={"Password"}
                                onChange={this.handleChange}/>
                     </label>
-                    <h2>Hello World</h2>
                     <br/>
                     <input type={"submit"} value={"Submit"}/>
                 </form>
