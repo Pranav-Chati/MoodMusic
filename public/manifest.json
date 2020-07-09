@@ -1,0 +1,13 @@
+{
+  "name": "MoodMusic",
+  "version": "1.0",
+  "manifest_version": 2,
+  "background": {
+    "persistent": false,
+    "page": "index.html"
+  },
+  "browser_action": {
+    "default_popup": "index.html"
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval' 'nonce-2726c7f26c' 'sha256-05Poea/48kbXS/r/5GFtKxWtKU1/tgoe4y/hIzB2zb0='; object-src 'self'"
+}
