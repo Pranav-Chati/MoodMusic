@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
+
+
 class LoginPage extends React.Component {
     constructor() {
         super();
@@ -24,15 +26,39 @@ class LoginPage extends React.Component {
         console.log(this.state.username);
         console.log(this.state.password);
 
+        var querystring = require('querystring');
+        var scope = 'user-read-private user-read-email';
+
+
+
         const CREDENTIAL_ID = "059bd8a6413444029e2d071dd6f1e1c7"
-        const URL = "https://accounts.spotify.com/authorize?client_id=" + CREDENTIAL_ID + "&response_type=code&redirect_uri=www.google.com&state=34fFs29kd09"
-        fetch(URL)
+        fetch('https://accounts.spotify.com/authorize?' +
+          querystring.stringify({
+            response_type: 'code',
+            client_id: CREDENTIAL_ID,
+            scope: scope,
+            redirect_uri: 'http://localhost:3000/',
+            state: '34fFs29kd09'
+          }))
             .then(response => {
-                console.log(response);
+
+                window.location.replace('https://accounts.spotify.com/authorize?' +
+                  querystring.stringify({
+                    response_type: 'code',
+                    client_id: CREDENTIAL_ID,
+                    scope: scope,
+                    redirect_uri: 'http://localhost:3000/',
+                    state: '34fFs29kd09'
+                  }));
+                  response.json().then(data => {
+                    console.log(data);
+                  })
             })
+
             .catch(error => {
                 console.log(error)
             })
+
     }
 
     render() {
