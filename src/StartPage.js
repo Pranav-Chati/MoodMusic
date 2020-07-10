@@ -5,28 +5,20 @@ import LoginPage from './LoginPage';
 class StartPage extends React.Component {
     constructor() {
         super();
-        this.state={
-            showButton:true,
-            showLogin:false,
-        }
 
         this.handleClick=this.handleClick.bind(this);
     }
 
     handleClick(event) {
         event.preventDefault();
-        this.setState({
-            showButton:false,
-            showLogin:true,
-        })
+        window.location.assign("/login")
     }
 
     render() {
         return(
             <div className={"sp-div"}>
                 {/*Add lottie animation here*/}
-                {this.state.showButton && <button onClick={this.handleClick}>Continue</button>}
-                {this.state.showLogin && <LoginPage/>}
+                <button onClick={this.handleClick}>Continue</button>
             </div>
         )
     }
