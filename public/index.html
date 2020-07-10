@@ -64,7 +64,20 @@
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script>
       (function() {
-
+        var trackIDs = [];
+        var trackNames = [];
+        var artistNames = [];
+        var trackURIs = [];
+        var length;
+        var trackDance = [];
+        var trackEnergy = [];
+        var trackMood = [];
+        var trackTempo = [];
+        var trackIDString = "";
+        var happy = [];
+        var sad = [];
+        var aggressive = [];
+        var chill = [];
         /**
          * Obtains parameters from the hash of the URL
          * @return Object
@@ -78,6 +91,68 @@
           }
           return hashParams;
         }
+        function getTrackIDs(musicList){
+
+    for(i=0;i<length;i++){
+        trackIDs[i] = musicList.items[i].id;
+        trackIDString += String(musicList.items[i].id); trackIDString += ",";
+        trackNames[i] = musicList.items[i].name;
+        artistNames[i] = musicList.items[i].artists[0].name;
+        trackURIs[i] = musicList.items[i].uri;
+
+    }
+
+}
+function requestTrackInfo(){
+
+    // for(index=0;index<length;index++){
+
+        // var uri = trackIDs[index];
+        // deferredArr.push(
+        $.ajax({
+            url: 'https://api.spotify.com/v1/audio-features?ids='+encodeURIComponent(trackIDString),
+            headers: {
+                'Authorization': 'Bearer ' + access_token
+            },
+            // ajaxI: index,
+            success: function(response) {
+                setTrackInfo(response);
+            },
+            })
+        // )
+    // }
+
+    // $.when.apply($,deferredArr).done(function() {
+
+    // });
+
+}
+
+function setTrackInfo(track){
+
+    for(i=0;i<length;i++){
+        trackDance[i] = track.audio_features[i].danceability;
+        trackEnergy[i] = track.audio_features[i].energy;
+        trackMood[i] = track.audio_features[i].valence;
+        trackTempo[i] = track.audio_features[i].tempo;
+    }
+
+}
+function calculateCategory(){
+
+    var c;
+
+    for(c=0;c<length;c++){
+      // console.log("entered loop");
+
+        if(trackMood[c] < 0.3 && trackEnergy[c]<0.6) { addToSad(c); }
+        if(trackMood[c] > 0.6 && trackEnergy[c] > 0.3) {  addToHappy(c);  }
+        if(trackEnergy[c] > 0.8) {   addToAggressive(c);  }
+        if(trackMood[c] > 0.3 && trackDance[c]>0.75) {   addToParty(c); }
+        if(trackEnergy[c] < 0.4 && trackMood[c] > 0.3) {   addToChill(c);  }
+
+    }
+}
 
         var userProfileSource = document.getElementById('user-profile-template').innerHTML,
             userProfileTemplate = Handlebars.compile(userProfileSource),
@@ -115,6 +190,17 @@
                   $('#loggedin').show();
                 }
             });
+
+            $.ajax({
+                url: 'https://api.spotify.com/v1/me/tracks',
+                headers: {
+                  'Authorization': 'Bearer ' + access_token
+                },
+                success: function(response) {
+                    getTrackIDs(response);
+                }
+            });
+
           } else {
               // render initial screen
               $('#login').show();
