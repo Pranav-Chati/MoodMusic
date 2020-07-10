@@ -28,19 +28,14 @@ class LoginPage extends React.Component {
 
         var querystring = require('querystring');
         var scope = 'user-read-private user-read-email';
-        const params = new URLSearchParams(window.location.search)
+        const params = new URLSearchParams(window.location.search);
 
 
-        const CREDENTIAL_ID = "059bd8a6413444029e2d071dd6f1e1c7"
-        fetch('https://accounts.spotify.com/authorize?' +
-          querystring.stringify({
-            response_type: 'code',
-            client_id: CREDENTIAL_ID,
-            scope: scope,
-            redirect_uri: 'http://localhost:3000/',
-            state: '34fFs29kd09'
-          }))
-            .then(response => {
+        const CREDENTIAL_ID = "059bd8a6413444029e2d071dd6f1e1c7";
+        const secret_id = "c3c76b36dd3d43c5a35b5d2a79f7a1e8";
+
+
+
 
                 window.location.replace('https://accounts.spotify.com/authorize?' +
                   querystring.stringify({
@@ -51,14 +46,24 @@ class LoginPage extends React.Component {
                     state: '34fFs29kd09'
                   }));
 
-                  console.log(params.get('code'));
+                  var code = params.get('code');
 
-            })
+                  const data1={
+                    grant_type:"authorization_code",
+                    code: code,
+                    redirect_uri: 'http://localhost:3000/'
+                  };
+                  const othepram={
+                    headers:{
+                      'Authorization': 'Basic ' + (new Buffer(CREDENTIAL_ID + ':' + secret_id).toString('base64'))
+                    },
+                    body: data1,
+                    method: "POST"
 
-            .catch(error => {
-                console.log(error)
-            })
-
+                  };
+                  fetch('https://accounts.spotify.com/api/token', othepram)
+                  .then(response =>{console.log(response.json())})
+                  .catch(error=>console.log(error))
     }
 
     render() {

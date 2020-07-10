@@ -19,13 +19,14 @@ class StartPage extends React.Component {
             showButton:false,
             showLogin:true,
         })
+        
     }
 
     render() {
         return(
             <div className={"sp-div"}>
                 {/*Add lottie animation here*/}
-                {this.state.showButton && <button onClick={this.handleClick}>Continue</button>}
+                {this.state.showButton && <button href="/login" class="btn btn-primary" onClick={this.handleClick}>Continue</button>}
                 {this.state.showLogin && <LoginPage/>}
             </div>
         )
