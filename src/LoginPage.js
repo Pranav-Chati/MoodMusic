@@ -32,7 +32,6 @@ class LoginPage extends React.Component {
 
 
         const CREDENTIAL_ID = "059bd8a6413444029e2d071dd6f1e1c7"
-
         fetch('https://accounts.spotify.com/authorize?' +
           querystring.stringify({
             response_type: 'code',
