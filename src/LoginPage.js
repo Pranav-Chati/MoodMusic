@@ -28,7 +28,7 @@ class LoginPage extends React.Component {
 
         var querystring = require('querystring');
         var scope = 'user-read-private user-read-email';
-
+        const params = new URLSearchParams(window.location.search)
 
 
         const CREDENTIAL_ID = "059bd8a6413444029e2d071dd6f1e1c7"
@@ -50,9 +50,9 @@ class LoginPage extends React.Component {
                     redirect_uri: 'http://localhost:3000/',
                     state: '34fFs29kd09'
                   }));
-                  response.json().then(data => {
-                    console.log(data);
-                  })
+
+                  console.log(params.get('code'));
+
             })
 
             .catch(error => {
